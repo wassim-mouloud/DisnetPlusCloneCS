@@ -1,0 +1,1 @@
+export const img="h-[24px] w-[24px] object-cover"

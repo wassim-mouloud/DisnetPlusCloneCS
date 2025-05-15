@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200&display=swap');
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+@media (max-width: 768px) {
+    * {
+        overflow-x: hidden;
+    }
+}
+a{
+    margin: 0;
+    padding: 0;
+}
+button{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: #0f1013;
+    overflow-x: hidden;
+}
+
+@media screen and (max-width: 768px){
+    .center-mobile{
+        align-items: center;
+    }
+}
+
+.fade-in{
+    animation: fade-in 1000ms linear
+}
+
+@keyframes fade-in{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+.image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(to bottom, transparent, black);
+    z-index:99;
+  }
+
+@media screen and (min-width:1024px) {
+    .calc{
+        width: calc(100% - 170px);
+      }
+}
+
+@media screen and (min-width: 1024px) {
+    .calc-child-slider {
+        width: calc(370px / 4 - 8px);
+    }
+}
+@media screen and (min-width: 1280px) {
+    .calc-child-slider {
+        width: calc(580px / 6 - 8px);
+    }
+}
+
+
+.rotatey{
+    transform: rotateY(180deg);
+}
+
+
+.slider{
+    --slider-index:1;
+    --pics:4;
+
+    width: calc(100% - 60px);
+    transform: translateX(calc(var(--slider-index) * -100%));
+    /* transition: transform 500ms linear ; */
+}
+
+.my-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: auto;
+    grid-gap: 10px;
+  }
+
+
+.pulse{
+    animation : pulse 900ms infinite
+}
+
+@keyframes pulse{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+.fade{
+    animation : fade 1s linear;
+}
+
+@keyframes fade{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+.skeleton{
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading{
+    0%{
+        background-color:hsl(227, 17%, 20%) ;
+    }
+    100%{
+        background-color:hsl(227, 17%, 10%) ;
+    }
+}
+
+.hide{
+    display: none;
+}
