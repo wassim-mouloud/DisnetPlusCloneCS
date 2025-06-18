@@ -19,6 +19,38 @@ function SearchCard({
   const [isInWatchlist, setIsInWatchlist] = useState(false);
   const [loading, setLoading] = useState(true);
   const { user, isLoading } = useAuth();
+  const [trailerUrl, setTrailerUrl] = useState(null);
+
+  useEffect(() => {
+    const fetchTrailer = async () => {
+      const type = "release_date" in movie ? "movie" : "tv";
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/${type}/${movie.id}/videos?language=en-US`,
+          {
+            method: "GET",
+            headers: {
+              accept: "application/json",
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NWIyOTk3YzgzMDBjZTlhN2Q0NzJjYjBhMzljZjI4ZiIsInN1YiI6IjYzNWFiODU0MmQ4ZWYzMDA4MTM5YmQ4ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.9uqLs8oCBNUguiDI0vyPoXyrmksjpVbHnZKtHnJObG0",
+            },
+          }
+        );
+        const data = await response.json();
+        const trailer = data.results.find(
+          (v) =>
+            v.site === "YouTube" && v.type === "Trailer" && (v.official || true)
+        );
+        if (trailer) {
+          setTrailerUrl(`https://www.youtube.com/watch?v=${trailer.key}`);
+        }
+      } catch (error) {
+        console.error("Failed to fetch trailer:", error);
+      }
+    };
+
+    fetchTrailer();
+  }, [movie]);
 
   useEffect(() => {
     const fetchWatchlist = async () => {
@@ -248,7 +280,10 @@ function SearchCard({
               e.preventDefault();
               e.stopPropagation();
               window.open(
-                `https://www.youtube.com/watch?v=rcBntNCD4ZY`,
+                trailerUrl ||
+                  `https://www.youtube.com/results?search_query=${encodeURIComponent(
+                    movie.original_title || movie.name
+                  )} trailer`,
                 "_blank"
               );
             }}

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { movie_genres, tv_genres } from "../utils/genres";
 import httpClient from "../httpClient";
 import { toast } from "sonner";
+import { useState, useEffect } from "react";
 
 const WatchlistCard = ({
   movie,
@@ -14,6 +15,40 @@ const WatchlistCard = ({
   setWatchlistMovies,
 }) => {
   const isMovie = "releaseDate" in movie;
+
+  const [trailerUrl, setTrailerUrl] = useState(null);
+
+  useEffect(() => {
+    const fetchTrailer = async () => {
+      const type = "releaseDate" in movie ? "movie" : "tv";
+      const id = isMovie ? movie.movieId : movie.seriesId;
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/${type}/${id}/videos?language=en-US`,
+          {
+            method: "GET",
+            headers: {
+              accept: "application/json",
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NWIyOTk3YzgzMDBjZTlhN2Q0NzJjYjBhMzljZjI4ZiIsInN1YiI6IjYzNWFiODU0MmQ4ZWYzMDA4MTM5YmQ4ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.9uqLs8oCBNUguiDI0vyPoXyrmksjpVbHnZKtHnJObG0",
+            },
+          }
+        );
+        const data = await response.json();
+        const trailer = data.results.find(
+          (v) =>
+            v.site === "YouTube" && v.type === "Trailer" && (v.official || true)
+        );
+        if (trailer) {
+          setTrailerUrl(`https://www.youtube.com/watch?v=${trailer.key}`);
+        }
+      } catch (error) {
+        console.error("Failed to fetch trailer:", error);
+      }
+    };
+
+    fetchTrailer();
+  }, [movie]);
 
   const handleRemoveMovieFromWatchlist = async (e) => {
     e.preventDefault();
@@ -76,6 +111,10 @@ const WatchlistCard = ({
   const genres = movie.genreIds;
   const rating = movie.voteAverage;
 
+  useEffect(() => {
+    console.log("Movie:", movie);
+  }, [movie]);
+
   return (
     <Link
       to={isMovie ? `/MovieDetail/${tmdbId}` : `/SeriesDetail/${tmdbId}`}
@@ -120,7 +159,10 @@ const WatchlistCard = ({
               e.preventDefault();
               e.stopPropagation();
               window.open(
-                `https://www.youtube.com/watch?v=rcBntNCD4ZY`,
+                trailerUrl ||
+                  `https://www.youtube.com/results?search_query=${encodeURIComponent(
+                    movie.originalTitle || movie.name
+                  )} trailer`,
                 "_blank"
               );
             }}

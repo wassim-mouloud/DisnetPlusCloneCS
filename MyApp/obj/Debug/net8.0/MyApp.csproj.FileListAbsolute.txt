@@ -340,3 +340,4 @@
 /Users/wassimmouloud/coding_projects/DIsneyPlusCS/MyApp/obj/Debug/net8.0/MyApp.pdb
 /Users/wassimmouloud/coding_projects/DIsneyPlusCS/MyApp/obj/Debug/net8.0/MyApp.genruntimeconfig.cache
 /Users/wassimmouloud/coding_projects/DIsneyPlusCS/MyApp/obj/Debug/net8.0/ref/MyApp.dll
+/Users/wassimmouloud/coding_projects/DIsneyPlusCS/MyApp/obj/Debug/net8.0/MyApp.sourcelink.json
