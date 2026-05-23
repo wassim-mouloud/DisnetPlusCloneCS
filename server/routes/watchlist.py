@@ -48,8 +48,8 @@ def add_movie():
 @watchlist_bp.post("/movies/remove")
 @login_required
 def remove_movie():
-    data = request.get_json()
-    movie_id = data.get("id")
+    data = request.get_json(force=True, silent=True)
+    movie_id = data.get("id") if isinstance(data, dict) else data
     movie = WatchlistMovie.query.filter_by(user_id=current_user.id, movie_id=movie_id).first()
     if not movie:
         return jsonify({"error": "Not found."}), 404
@@ -99,8 +99,8 @@ def add_series():
 @watchlist_bp.post("/series/remove")
 @login_required
 def remove_series():
-    data = request.get_json()
-    series_id = data.get("id")
+    data = request.get_json(force=True, silent=True)
+    series_id = data.get("id") if isinstance(data, dict) else data
     series = WatchlistSeries.query.filter_by(user_id=current_user.id, series_id=series_id).first()
     if not series:
         return jsonify({"error": "Not found."}), 404

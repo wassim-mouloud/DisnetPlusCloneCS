@@ -23,7 +23,7 @@ def create_app():
     login_manager.init_app(app)
     login_manager.login_view = "auth.login"
 
-    CORS(app, origins=["http://localhost:3000"], supports_credentials=True)
+    CORS(app, origins=["http://localhost:3000"], supports_credentials=True, allow_headers=["Content-Type"], methods=["GET", "POST", "OPTIONS"])
 
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(watchlist_bp, url_prefix="/api/watchlist")
