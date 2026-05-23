@@ -18,7 +18,6 @@ namespace MovieApp.Data
         {
             base.OnModelCreating(builder);
 
-            // Optional: Add indexes or constraints if needed
             builder.Entity<WatchlistMovie>()
                 .HasIndex(w => new { w.UserId, w.MovieId })
                 .IsUnique();

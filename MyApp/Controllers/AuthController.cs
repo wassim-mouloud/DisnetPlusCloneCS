@@ -1,4 +1,3 @@
-// AuthController.cs
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -87,7 +86,7 @@ namespace MovieApp.Controllers
     {
         public string Email { get; set; }
         public string Password { get; set; }
-        public string Username { get; set; } // Used as UserName
+        public string Username { get; set; } 
     }
 
     public class LoginDto
