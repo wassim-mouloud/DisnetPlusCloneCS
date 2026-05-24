@@ -1,7 +1,7 @@
 [build]
 builder = "nixpacks"
-buildCommand = "npm run build"
+buildCommand = "npm install && npm run build"
 
 [deploy]
-startCommand = "npx serve -s build -l $PORT"
+startCommand = "npx serve -s build --listen $PORT"
 restartPolicyType = "on_failure"
